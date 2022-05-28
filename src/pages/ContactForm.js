@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { IonButton, IonInput, IonItem, IonLabel } from '@ionic/react';
+import { IonButton, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react';
 
 const initialState = {
   name: '',
+  last_name: '',
   nickname: '',
   phone_number: '',
   email: ''
@@ -25,12 +26,16 @@ const ContactForm = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: '5%' }}>
       <p>Por favor rellene los siguientes campos</p>
       <form style={{ marginTop: '5%' }}>
         <IonItem>
-          <IonLabel>Nombre completo</IonLabel>
-          <IonInput clearInput onIonChange={getFormData} name="name"></IonInput>
+          <IonLabel>Nombre(s)</IonLabel>
+          <IonInput clearInput onIonChange={getFormData} required name="name"></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Apellido(s)</IonLabel>
+          <IonInput clearInput onIonChange={getFormData} required name="last_name"></IonInput>
         </IonItem>
         <IonItem>
           <IonLabel>Apodo / alias</IonLabel>
@@ -38,14 +43,16 @@ const ContactForm = () => {
         </IonItem>
         <IonItem>
           <IonLabel>Número</IonLabel>
-          <IonInput type="number" clearInput onIonChange={getFormData} name="phone_number"></IonInput>
+          <IonInput type="number" clearInput onIonChange={getFormData} required name="phone_number"></IonInput>
         </IonItem>
         <IonItem>
           <IonLabel>Correo</IonLabel>
-          <IonInput type="email" clearInput onIonChange={getFormData} name="email"></IonInput>
+          <IonInput type="email" clearInput onIonChange={getFormData}  name="email"></IonInput>
         </IonItem>
       
-        <IonButton onClick={handleSubmit}>Guardar</IonButton>
+        <IonRow style={{ marginTop: '5%' }}>
+          <IonButton onClick={handleSubmit} style={{ width: '100%' }}>Guardar Contacto</IonButton>
+        </IonRow>
       </form>
     </div>
   );
