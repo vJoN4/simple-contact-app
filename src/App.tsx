@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
+import MainScreen from './pages/MainScreen';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -40,14 +40,14 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/tab1">
-            <Tab1 />
+            <MainScreen />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/main" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="MainScreen" href="/main">
             <IonIcon icon={triangle} />
             <IonLabel>Contactos</IonLabel>
           </IonTabButton>
