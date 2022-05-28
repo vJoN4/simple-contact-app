@@ -1,6 +1,6 @@
 import { IonAvatar, IonItem, IonLabel, IonList } from '@ionic/react';
 
-const List = ({ items = [] }) => {
+const ContactList = ({ items = [] }) => {
   return (
     <IonList>
       {items.length ? 
@@ -22,4 +22,4 @@ const List = ({ items = [] }) => {
   );
 };
 
-export default List;
+export default ContactList;

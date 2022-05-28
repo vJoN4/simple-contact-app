@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IonContent, IonButton, IonHeader, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import List from '../components/List';
+import ContactList from '../components/ContactList';
 import ContactForm from '../components/ContactForm';
 import './MainScreen.css';
 
@@ -29,7 +29,7 @@ const MainScreen = () => {
           <ContactForm />
         </IonContent>
       </IonModal>
-        <List items={contactJSON}/>
+        <ContactList items={contactJSON}/>
       </IonContent>
     </IonPage>
   );

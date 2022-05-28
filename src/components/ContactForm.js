@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react';
 
 const initialState = {
@@ -9,8 +9,14 @@ const initialState = {
   email: ''
 };
 
-const ContactForm = () => {
+const ContactForm = ({ oContact = {} }) => {
   const [contact, setContact] = useState(initialState);
+
+  useEffect(() => {
+    if (Object.keys(oContact).length) {
+      setContact(oContact);
+    }
+  }, [oContact]);
 
   const getFormData = ({ detail:{value}, target:{ name:inputName } }) => {
     if (!!value && !!inputName) {
@@ -31,23 +37,23 @@ const ContactForm = () => {
       <form style={{ marginTop: '5%' }}>
         <IonItem>
           <IonLabel>Nombre(s)</IonLabel>
-          <IonInput clearInput onIonChange={getFormData} required name="name"></IonInput>
+          <IonInput clearInput onIonChange={getFormData} required name="name" />
         </IonItem>
         <IonItem>
           <IonLabel>Apellido(s)</IonLabel>
-          <IonInput clearInput onIonChange={getFormData} required name="last_name"></IonInput>
+          <IonInput clearInput onIonChange={getFormData} required name="last_name" />
         </IonItem>
         <IonItem>
           <IonLabel>Apodo / alias</IonLabel>
-          <IonInput clearInput onIonChange={getFormData} name="nickname"></IonInput>
+          <IonInput clearInput onIonChange={getFormData} name="nickname" />
         </IonItem>
         <IonItem>
           <IonLabel>Número</IonLabel>
-          <IonInput type="number" clearInput onIonChange={getFormData} required name="phone_number"></IonInput>
+          <IonInput type="number" clearInput onIonChange={getFormData} required name="phone_number" />
         </IonItem>
         <IonItem>
           <IonLabel>Correo</IonLabel>
-          <IonInput type="email" clearInput onIonChange={getFormData}  name="email"></IonInput>
+          <IonInput type="email" clearInput onIonChange={getFormData}  name="email" />
         </IonItem>
       
         <IonRow style={{ marginTop: '5%' }}>
