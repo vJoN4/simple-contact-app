@@ -62,7 +62,7 @@ const MainScreen = () => {
                     setContact({});
                     setTimeout(() => {
                       if (isEditing) setIsEditing(false);
-                    }, 1000);
+                    }, 500);
                   }}
                   slot="end"
                   style={{ marginRight: '3%' }}
