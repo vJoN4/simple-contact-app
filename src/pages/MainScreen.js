@@ -26,7 +26,10 @@ const MainScreen = () => {
             <IonToolbar>
               <IonTitle>{isEditing ? "Editar" : "Añadir"}</IonTitle>
               <IonButton
-                onClick={() => setIsVisible(!isVisible)}
+                onClick={() => {
+                  setIsVisible(!isVisible);
+                  setContact({});
+                }}
                 slot="end"
               >
                 Cancelar
