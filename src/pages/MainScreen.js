@@ -32,6 +32,7 @@ const MainScreen = () => {
     setShowToast(true);
     updater();
     setContact({});
+    if (isEditing) setIsEditing(false);
   }
 
   return (
@@ -59,6 +60,9 @@ const MainScreen = () => {
                   onClick={() => {
                     setIsVisible(!isVisible);
                     setContact({});
+                    setTimeout(() => {
+                      if (isEditing) setIsEditing(false);
+                    }, 1000);
                   }}
                   slot="end"
                   style={{ marginRight: '3%' }}
