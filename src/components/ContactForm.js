@@ -14,24 +14,24 @@ const initialState = {
 
 const validationSchema = yup.object().shape({
   name: yup
-  .string()
-  .min(10, 'El nombre debe tener al menos 10 caracteres')
-  .required('Nombre(s) es requerido'),
+    .string()
+    .min(10, 'El nombre debe tener al menos 10 caracteres')
+    .required('Nombre(s) es requerido'),
   last_name: yup
-  .string()
-  .min(10, 'Los apellidos debe tener al menos 10 caracteres')
-  .required('Apellido(s) es requerido'),
+    .string()
+    .min(10, 'Los apellidos debe tener al menos 10 caracteres')
+    .required('Apellido(s) es requerido'),
   nickname: yup
-  .string()
-  .min(4, 'El apodo debe tener al menos 4 caracteres'),
+    .string()
+    .min(4, 'El apodo debe tener al menos 4 caracteres'),
   email: yup
-  .string()
-  .email("Ingresa un email valido"),
+    .string()
+    .email("Ingresa un email valido"),
   phone_number: yup
-  .string()
-  .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'El número debe tener 10 digitos')
-  .min(10, 'El número debe tener 10 digitos')
-  .required('El Número es requerido'),
+    .string()
+    .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'El número debe tener 10 digitos')
+    .min(10, 'El número debe tener 10 digitos')
+    .required('El Número es requerido'),
 });
 
 const ContactForm = ({ 
@@ -45,7 +45,6 @@ const ContactForm = ({
       setContact(oContact);
     }
   }, [oContact]);
-
 
   const onSubmit = values => {
     console.log(values);
@@ -161,4 +160,4 @@ const ContactForm = ({
   );
 };
 
-export default ContactForm
+export default ContactForm;
