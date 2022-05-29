@@ -1,4 +1,6 @@
-import { IonButton, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react';
+import { useState } from 'react';
+import { IonButton, IonInput, IonItem, IonLabel, IonRow, IonSpinner } from '@ionic/react';
+import { saveContact } from '../environments/api';
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -35,11 +37,22 @@ const validationSchema = yup.object().shape({
 
 const ContactForm = ({ 
   oContact = {},
-  isEditing = Boolean
+  isEditing = Boolean,
+  setMessage,
+  setShowToast,
+  setIsVisible,
+  updater
 }) => {
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = values => {
-    console.log(values);
+  const onSubmit = async values => {
+    setLoading(true);
+    await saveContact(values);
+    setLoading(false);
+    setIsVisible(false);
+    setMessage("Contacto guardado");
+    setShowToast(true);
+    updater();
   };
 
   const handleDelete = () => {
@@ -130,7 +143,7 @@ const ContactForm = ({
                   onClick={handleSubmit} 
                   style={{ width: '100%' }}
                 >
-                  Guardar Contacto
+                  {loading ? <IonSpinner name="crescent" /> : "Guardar Contacto" }
                 </IonButton>
               </IonRow>
               {isEditing ? (

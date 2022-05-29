@@ -1,5 +1,18 @@
 import { useState } from 'react';
-import { IonContent, IonButton, IonHeader, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { 
+  IonContent,
+  IonButton,
+  IonFab,
+  IonFabButton,
+  IonHeader,
+  IonIcon,
+  IonModal,
+  IonPage,
+  IonTitle,
+  IonToolbar ,
+  IonToast
+} from '@ionic/react';
+import { add, closeCircle } from 'ionicons/icons';
 import ContactList from '../components/ContactList';
 import ContactForm from '../components/ContactForm';
 import './MainScreen.css';
@@ -7,41 +20,56 @@ import { useFetchContacts } from '../hooks/Contact.hook';
 
 const MainScreen = () => {
   const [contact, setContact] = useState({});
+  const [message, setMesaage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [contacts, loading] = useFetchContacts();
+  const [showToast, setShowToast] = useState(false);
+  const [contacts, loading, updater] = useFetchContacts();
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Contactos</IonTitle>
-          <IonButton slot="end" onClick={() => setIsVisible(!isVisible)}>Agregar</IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-      <IonModal isOpen={isVisible}>
-        <IonContent>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>{isEditing ? "Editar" : "Añadir"}</IonTitle>
-              <IonButton
-                onClick={() => {
-                  setIsVisible(!isVisible);
-                  setContact({});
-                }}
-                slot="end"
-              >
-                Cancelar
-              </IonButton>
-            </IonToolbar>
-          </IonHeader>
-          <ContactForm
-            oContact={contact}
-            isEditing={isEditing}
-          />
-        </IonContent>
-      </IonModal>
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => setIsVisible(!isVisible)}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
+
+        <IonModal isOpen={isVisible}>
+          <IonContent>
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle>{isEditing ? "Editar" : "Añadir"}</IonTitle>
+                <IonButton
+                  color='danger'
+                  onClick={() => {
+                    setIsVisible(!isVisible);
+                    setContact({});
+                  }}
+                  slot="end"
+                  style={{ marginRight: '3%' }}
+                >
+                  <IonIcon icon={closeCircle} />
+                </IonButton>
+              </IonToolbar>
+            </IonHeader>
+            <ContactForm
+              oContact={contact}
+              isEditing={isEditing}
+              setMessage={setMesaage}
+              setShowToast={setShowToast}
+              setIsVisible={setIsVisible}
+              updater={updater}
+            />
+          </IonContent>
+        </IonModal>
+
         <ContactList 
           items={contacts.length ? contacts : []}
           loading={loading}
@@ -49,6 +77,14 @@ const MainScreen = () => {
           setContact={setContact}
           setIsEditing={setIsEditing}
         />
+
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(!showToast)}
+          message={message}
+          duration={450}
+        />
+
       </IonContent>
     </IonPage>
   );

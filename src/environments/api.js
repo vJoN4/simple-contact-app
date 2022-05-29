@@ -1,13 +1,14 @@
-import { collection, getDocs } from "firebase/firestore";
+import { 
+  collection, 
+  addDoc,
+  getDocs 
+} from "firebase/firestore";
 
 import db from './firebaseconfig';
 
 const collectionName = "contacts";
 
-export const getContacts = () => {
-  try {
-    return getDocs(collection(db, collectionName))
-  } catch (error) {
-    console.log("-->", error);
-  }
-};
+export const getContacts = () => getDocs(collection(db, collectionName));
+
+export const saveContact = contact => addDoc(collection(db, collectionName), contact);
+
