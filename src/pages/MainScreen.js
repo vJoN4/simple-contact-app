@@ -20,11 +20,19 @@ import { useFetchContacts } from '../hooks/Contact.hook';
 
 const MainScreen = () => {
   const [contact, setContact] = useState({});
-  const [message, setMesaage] = useState('');
+  const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [contacts, loading, updater] = useFetchContacts();
+
+  const onFinish = msg => {
+    setIsVisible(false);
+    setMessage(msg);
+    setShowToast(true);
+    updater();
+    setContact({});
+  }
 
   return (
     <IonPage>
@@ -62,10 +70,7 @@ const MainScreen = () => {
             <ContactForm
               oContact={contact}
               isEditing={isEditing}
-              setMessage={setMesaage}
-              setShowToast={setShowToast}
-              setIsVisible={setIsVisible}
-              updater={updater}
+              onFinish={onFinish}
             />
           </IonContent>
         </IonModal>
@@ -82,7 +87,7 @@ const MainScreen = () => {
           isOpen={showToast}
           onDidDismiss={() => setShowToast(!showToast)}
           message={message}
-          duration={450}
+          duration={2000}
         />
 
       </IonContent>

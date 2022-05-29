@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonRow, IonSpinner } from '@ionic/react';
-import { saveContact } from '../environments/api';
+import { deleteContact, saveContact } from '../environments/api';
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -38,25 +38,28 @@ const validationSchema = yup.object().shape({
 const ContactForm = ({ 
   oContact = {},
   isEditing = Boolean,
-  setMessage,
-  setShowToast,
-  setIsVisible,
-  updater
+  onFinish
 }) => {
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  const generalCallBack = async (fn, data = undefined, msg="") => {
+    setLoading(true);
+    await fn(data);
+    setLoading(false);
+    onFinish(msg);
+  };
 
   const onSubmit = async values => {
-    setLoading(true);
-    await saveContact(values);
-    setLoading(false);
-    setIsVisible(false);
-    setMessage("Contacto guardado");
-    setShowToast(true);
-    updater();
+    generalCallBack(saveContact, values, "Contacto guardado");
   };
 
   const handleDelete = () => {
-    console.log('delete');
+    if (oContact?.id) {
+      setDeleting(true);
+      generalCallBack(deleteContact, oContact.id, "Contacto eliminado");
+      setDeleting(false);
+    }
   }
 
   return (
@@ -143,7 +146,7 @@ const ContactForm = ({
                   onClick={handleSubmit} 
                   style={{ width: '100%' }}
                 >
-                  {loading ? <IonSpinner name="crescent" /> : "Guardar Contacto" }
+                  {loading && deleting ? <IonSpinner name="crescent" /> : "Guardar Contacto" }
                 </IonButton>
               </IonRow>
               {isEditing ? (
@@ -153,7 +156,7 @@ const ContactForm = ({
                     onClick={handleDelete} 
                     style={{ width: '100%' }}
                   >
-                    Eliminar Contacto
+                    {deleting ? <IonSpinner name="crescent" /> : "Eliminar Contacto" }
                   </IonButton>
                 </IonRow>
               ): null}
