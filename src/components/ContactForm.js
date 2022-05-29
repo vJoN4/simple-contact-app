@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonRow } from '@ionic/react';
 
 import { Formik } from "formik";
@@ -38,13 +37,6 @@ const ContactForm = ({
   oContact = {},
   isEditing = Boolean
 }) => {
-  const [contact, setContact] = useState(initialState);
-
-  useEffect(() => {
-    if (Object.keys(oContact).length) {
-      setContact(oContact);
-    }
-  }, [oContact]);
 
   const onSubmit = values => {
     console.log(values);
@@ -59,7 +51,7 @@ const ContactForm = ({
       <p>Por favor rellene los siguientes campos</p>
       <Formik 
         style={{ marginTop: '5%' }}
-        initialValues={contact}
+        initialValues={isEditing && Object.keys(oContact).length ? oContact : initialState}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
@@ -109,7 +101,6 @@ const ContactForm = ({
                   <IonInput
                     type="number"
                     name="phone_number" 
-
                     onIonChange={handleChange}
                     value={values?.phone_number}
                     clearInput
