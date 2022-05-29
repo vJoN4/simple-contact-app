@@ -1,8 +1,9 @@
-import { IonAvatar, IonButton, IonIcon, IonItem, IonLabel, IonList } from '@ionic/react';
+import { IonAvatar, IonButton, IonIcon, IonItem, IonLabel, IonList, IonSpinner } from '@ionic/react';
 import { create } from 'ionicons/icons';
 
 const ContactList = ({ 
   items = [],
+  loading = Boolean,
   setContact,
   setIsVisible,
   setIsEditing
@@ -13,7 +14,11 @@ const ContactList = ({
     setIsVisible(true);
   }
 
-  return (
+  return loading ? (
+    <div className='container'>
+      <IonSpinner name="crescent"/>
+    </div>
+  ) : (
     <IonList>
       {items.length ? 
         (
