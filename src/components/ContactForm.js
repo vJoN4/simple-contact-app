@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonRow, IonSpinner } from '@ionic/react';
-import { deleteContact, saveContact } from '../environments/api';
+import { deleteContact, saveContact, updateContact } from '../environments/api';
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -51,7 +51,11 @@ const ContactForm = ({
   };
 
   const onSubmit = async values => {
-    generalCallBack(saveContact, values, "Contacto guardado");
+    if (values?.id && isEditing) {
+      generalCallBack(updateContact, values, "Contacto actualizado");
+    } else {
+      generalCallBack(saveContact, values, "Contacto guardado");
+    }
   };
 
   const handleDelete = () => {
